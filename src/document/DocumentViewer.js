@@ -12,6 +12,7 @@ export const DocumentViewer = () => {
   const [initDate, setInitDate] = useState(firstDayOfCurrentMonth);
   const lastDayOfCurrentMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0);
   const [endDate, setEndDate] = useState(lastDayOfCurrentMonth);
+  const [showCalendars, setShowCalendars] = useState([]);
   return <div className="w-screen h-screen">
     <button
       onClick={() => setShowConfig(true)}
