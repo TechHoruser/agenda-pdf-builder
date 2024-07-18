@@ -8,12 +8,27 @@ import "react-datepicker/dist/react-datepicker.css";
 
 export const DocumentViewer = () => {
   const [showConfig, setShowConfig] = useState(false);
-  const [initDate, setInitDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date(initDate.getTime() + 365 * 24 * 60 * 60 * 1000));
+  const firstDayOfCurrentMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+  const [initDate, setInitDate] = useState(firstDayOfCurrentMonth);
+  const lastDayOfCurrentMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0);
+  const [endDate, setEndDate] = useState(lastDayOfCurrentMonth);
   return <div className="w-screen h-screen">
     <button
       onClick={() => setShowConfig(true)}
-      className="bg-blue-500 absolute w-40 top-10 right-0 p-2 rounded rounded-r-none flex justify-center items-center"
+      className="
+        bg-gray-500
+        h-8
+        w-40
+        rounded-l-md
+        text-white
+        flex
+        items-center
+        justify-center
+        hover:bg-gray-600
+        absolute
+        top-10
+        right-0
+      "
     >
       Mostrar Config
     </button>
@@ -23,21 +38,58 @@ export const DocumentViewer = () => {
       && <Modal
         onClose={() => setShowConfig(false)}
       >
-        <div className="flex flex-col gap-4">
-          <label>
-            Fecha Inicial
-            <DatePicker
-              selected={initDate}
-              onChange={(newValue) => setInitDate(newValue)}
-            />
-          </label>
-          <label>
-            Fecha Final
-            <DatePicker
-              selected={endDate}
-              onChange={(newValue) => setEndDate(newValue)}
-            />
-          </label>
+        <div className="flex flex-col justify-center gap-4">
+          <div className="flex gap-4">
+            <label
+              className="flex flex-col"
+            >
+              Fecha Inicial
+              <DatePicker
+                className="rounded bg-gray-500/20 px-2"
+                selected={initDate}
+                onChange={(newValue) => setInitDate(newValue)}
+              />
+            </label>
+            <label
+              className="flex flex-col"
+            >
+              Fecha Final
+              <DatePicker
+                className="rounded bg-gray-500/20 px-2"
+                selected={endDate}
+                onChange={(newValue) => setEndDate(newValue)}
+              />
+            </label>
+          </div>
+
+          <div>
+            <label
+              className="flex flex-col"
+            >
+              Calendarios a Mostrar
+              <div>
+                <input
+                  type="checkbox"
+                  className="rounded bg-gray-500/20 px-2 mr-2"
+                />
+                Diario
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  className="rounded bg-gray-500/20 px-2 mr-2"
+                />
+                Semanal
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  className="rounded bg-gray-500/20 px-2 mr-2"
+                />
+                Mensual
+              </div>
+            </label>
+          </div>
         </div>
       </Modal>
     }
