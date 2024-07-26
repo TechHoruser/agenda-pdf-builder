@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { DocumentViewer } from './document/DocumentViewer';
+import { DocumentProvider } from './document/DocumentContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <DocumentViewer />
+    <DocumentProvider>
+      <DocumentViewer />
+    </DocumentProvider>
   </React.StrictMode>
 );
 

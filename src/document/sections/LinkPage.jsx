@@ -3,6 +3,14 @@ import { Page } from "./Page";
 
 export const LinkPage = ({
   date,
-}) => <Page>
-    <Text>Fecha: {date.toISOString()}</Text>
+}) => {
+  const getDate = () => {
+    return date.toLocaleDateString();
+  }
+
+  return <Page
+    bookmark={date.toLocaleDateString()}
+  >
+    <Text id={getDate()}>Fecha: {getDate()}</Text>
   </Page>
+}

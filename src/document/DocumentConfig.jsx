@@ -1,19 +1,19 @@
-import { PDFViewer } from "@react-pdf/renderer";
-import { useState } from "react";
-import { Document } from "./Document";
-import { Modal } from "../components/Modal";
-import DatePicker from "react-datepicker";
+import DatePicker from "react-datepicker"
+import { Modal } from "../components/Modal"
+import { useContext } from "react"
+import { DocumentContext } from "./DocumentContext"
 
-import "react-datepicker/dist/react-datepicker.css";
+export const DocumentConfig = () => {
+  const {
+    initDate,
+    setInitDate,
+    endDate,
+    setEndDate,
+    showConfig,
+    setShowConfig,
+  } = useContext(DocumentContext)
 
-export const DocumentViewer = () => {
-  const [showConfig, setShowConfig] = useState(false);
-  const firstDayOfCurrentMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
-  const [initDate, setInitDate] = useState(firstDayOfCurrentMonth);
-  const lastDayOfCurrentMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0);
-  const [endDate, setEndDate] = useState(lastDayOfCurrentMonth);
-  const [showCalendars, setShowCalendars] = useState([]);
-  return <div className="w-screen h-screen">
+  return <>
     <button
       onClick={() => setShowConfig(true)}
       className="
@@ -48,7 +48,10 @@ export const DocumentViewer = () => {
               <DatePicker
                 className="rounded bg-gray-500/20 px-2"
                 selected={initDate}
-                onChange={(newValue) => setInitDate(newValue)}
+                onChange={(newValue) => {
+                  setInitDate(newValue)
+                }}
+                dateFormat="dd/MM/yyyy"
               />
             </label>
             <label
@@ -58,7 +61,10 @@ export const DocumentViewer = () => {
               <DatePicker
                 className="rounded bg-gray-500/20 px-2"
                 selected={endDate}
-                onChange={(newValue) => setEndDate(newValue)}
+                onChange={(newValue) => {
+                  setEndDate(newValue)
+                }}
+                dateFormat="dd/MM/yyyy"
               />
             </label>
           </div>
@@ -94,13 +100,5 @@ export const DocumentViewer = () => {
         </div>
       </Modal>
     }
-    <PDFViewer
-      className="h-screen w-screen"
-    >
-      <Document
-        initDate={initDate}
-        endDate={endDate}
-      />
-    </PDFViewer >
-  </div>
+  </>
 }
