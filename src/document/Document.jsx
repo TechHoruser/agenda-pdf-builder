@@ -19,7 +19,12 @@ export const Document = () => {
     >
       {/* <FrontPage /> */}
 
-      <CalendarNavigate initDate={initDate} endDate={endDate} />
+      <CalendarNavigate
+        initDate={initDate}
+        endDate={endDate}
+        availableDays={[0, 1, 2, 3, 4, 5, 6]}
+        startWeekDay={1}
+      />
 
       {
         Array.from({ length: numberOfDays + 1 }, (_, i) => {

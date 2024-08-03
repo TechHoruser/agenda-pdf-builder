@@ -4,8 +4,12 @@ import { DocumentStyles } from "../DocumentStyles";
 export const Page = ({
   children,
   linkId,
+  style = {},
 }) => <PageExternal
-  style={DocumentStyles.Page}
+  style={{
+    ...DocumentStyles.Page,
+    ...style,
+  }}
   id={linkId}
 >
     {children}
