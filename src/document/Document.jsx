@@ -8,7 +8,7 @@ import { CalendarNavigate } from './sections/CalendarNavigate';
 
 export const Document = () => {
   const { initDate, endDate, getHashConfig } = useContext(DocumentContext);
-  const numberOfDays = Math.floor((endDate.getTime() - initDate.getTime() + 1) / (24 * 60 * 60 * 1000));
+  const numberOfDays = Math.round((endDate.getTime() - initDate.getTime() + 1) / (24 * 60 * 60 * 1000));
 
   return <PDFViewer
     className="h-screen w-screen"

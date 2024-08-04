@@ -1,5 +1,4 @@
 import { Text, View, Link } from '@react-pdf/renderer';
-import { StyleSheet } from '@react-pdf/renderer';
 
 export const NAVIGATION_LINK_ID = "navigation";
 
@@ -31,29 +30,32 @@ export const Month = ({
   widthOfDay = 22,
   availableDays,
 }) => {
-  const firstDayOfMonth = new Date(initDate.getFullYear(), initDate.getMonth(), 1);
-  const lastDayOfMonth = new Date(endDate.getFullYear(), endDate.getMonth() + 1, 0);
-
-  const searchPreviousFirstDayOfWeek = (date, firstDayOfWeek) => {
-    if (date.getDay() === firstDayOfWeek) {
+  const searchPreviousFirstDayOfWeek = (date) => {
+    if (date.getDay() === startWeekDay) {
       return date;
     }
-    return searchPreviousFirstDayOfWeek(new Date(date.getTime() - 24 * 60 * 60 * 1000), firstDayOfWeek);
+    return searchPreviousFirstDayOfWeek(new Date(date.getTime() - 24 * 60 * 60 * 1000));
   }
 
-  const searchNextLastDayOfWeek = (date, lastDayOfWeek) => {
+  const searchNextLastDayOfWeek = (date) => {
+    const lastDayOfWeek = (startWeekDay + 6) % 7;
     if (date.getDay() === lastDayOfWeek) {
       return date;
     }
-    return searchNextLastDayOfWeek(new Date(date.getTime() + 24 * 60 * 60 * 1000), lastDayOfWeek);
+    return searchNextLastDayOfWeek(new Date(date.getTime() + 24 * 60 * 60 * 1000));
   }
 
-  const firstDay = searchPreviousFirstDayOfWeek(firstDayOfMonth, startWeekDay);
-  const lastDay = searchNextLastDayOfWeek(lastDayOfMonth, (startWeekDay + 6) % 7);
-  const numberOfDays = Math.floor((lastDay.getTime() - firstDay.getTime()) / (24 * 60 * 60 * 1000)) + 1;
+  const firstDay = searchPreviousFirstDayOfWeek(initDate);
+  const lastDay = searchNextLastDayOfWeek(endDate);
+  const numberOfDays = Math.round((lastDay.getTime() - firstDay.getTime()) / (24 * 60 * 60 * 1000) + 1);
+
+  console.log('Month', initDate.toLocaleDateString('es-ES', { month: 'long' }))
+  console.log('Month - first day', firstDay.toLocaleString())
+  console.log('Month - last day', lastDay.toLocaleString())
+  console.log('Month - number of days', numberOfDays)
+  console.log('Month - endDate', endDate.toLocaleString())
 
   const isDayAvailable = (day) => {
-
     return availableDays.includes(day.getDay())
       && day.getTime() >= initDate.getTime()
       && day.getTime() <= endDate.getTime()
@@ -66,8 +68,22 @@ export const Month = ({
       flexWrap: 'wrap',
       width: `${7 * widthOfDay}rem`,
       textAlign: 'center',
+      margin: 10,
     }}
   >
+    <Text
+      style={{
+        width: '100%',
+        fontSize: 12,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginBottom: 2,
+        textTransform: 'capitalize',
+      }}
+    >{
+        initDate.toLocaleDateString('es-ES', { month: 'long' })
+      }</Text>
+
     {
       Array.from({ length: 7 }, (_, i) => {
         const day = (startWeekDay + i) % 7;
@@ -75,11 +91,10 @@ export const Month = ({
           key={i}
           style={{
             width: `${widthOfDay}rem`,
-            padding: '1rem',
-            margin: '0',
-            border: '1px solid #999',
+            padding: 2,
             textDecoration: 'none',
-            fontSize: 10,
+            fontSize: 5,
+            marginBottom: 1,
           }}
         >
           <Text>{weekDayByIndex(day)}</Text>
@@ -88,16 +103,14 @@ export const Month = ({
     }
     {
       Array.from({ length: numberOfDays }, (_, i) => {
-        const date = new Date(firstDay.getTime() + i * 24 * 60 * 60 * 1000);
-        const day = date.getDate();
+        const date = new Date(firstDay.getTime());
+        date.setDate(date.getDate() + i);
 
         return <View
           key={i}
           style={{
             width: `${widthOfDay}rem`,
-            padding: '1rem',
-            margin: '0',
-            border: '1px solid #999',
+            padding: 2,
             textDecoration: 'none',
             fontSize: 10,
           }}
@@ -111,13 +124,13 @@ export const Month = ({
                 }}
                 src={`#${date.toLocaleDateString()}`}
               >
-                <Text>{day}</Text>
+                <Text>{date.getDate()}</Text>
               </Link>
               : <Text
                 style={{
                   color: '#AAA',
                 }}
-              >{day}</Text>
+              >{date.getDate()}</Text>
           }
         </View>
       })
