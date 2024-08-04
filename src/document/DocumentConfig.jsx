@@ -46,89 +46,79 @@ export const DocumentConfig = () => {
             <label
               className="flex flex-col"
             >
-              Fecha Inicial
+              Fecha Inicio y Fin
               <DatePicker
                 className="rounded bg-gray-500/20 px-2"
                 selected={initDate}
-                onChange={(newValue) => {
-                  setInitDate(newValue)
+                onChange={(dates) => {
+                  const [start, end] = dates
+                  setInitDate(start)
+                  setEndDate(end ?? start)
                 }}
+                startDate={initDate}
+                endDate={endDate}
                 dateFormat="dd/MM/yyyy"
-              />
-            </label>
-            <label
-              className="flex flex-col"
-            >
-              Fecha Final
-              <DatePicker
-                className="rounded bg-gray-500/20 px-2"
-                selected={endDate}
-                onChange={(newValue) => {
-                  setEndDate(newValue)
-                }}
-                dateFormat="dd/MM/yyyy"
+                selectsRange
               />
             </label>
           </div>
 
-          <div>
-            <label
-              className="flex flex-col"
-            >
-              Calendarios a Mostrar
-              <div>
-                <input
-                  id="day"
-                  type="checkbox"
-                  value={showCalendars.includes("day")}
-                  onChange={() => {
-                    if (showCalendars.includes("day")) {
-                      setShowCalendars(showCalendars.filter((calendar) => calendar !== "day"))
-                    } else {
-                      setShowCalendars([...showCalendars, "day"])
-                    }
-                  }}
-                  className="rounded bg-gray-500/20 px-2 mr-2"
-                />
-                Diario
-              </div>
-              <div>
-                <input
-                  id="week"
-                  type="checkbox"
-                  value={showCalendars.includes("week")}
-                  onChange={() => {
-                    if (showCalendars.includes("week")) {
-                      setShowCalendars(showCalendars.filter((calendar) => calendar !== "week"))
-                    } else {
-                      setShowCalendars([...showCalendars, "week"])
-                    }
-                  }}
-                  className="rounded bg-gray-500/20 px-2 mr-2"
-                />
-                <label
-                  htmlFor="week"
-                >Semanal</label>
-              </div>
-              <div>
-                <input
-                  id="month"
-                  type="checkbox"
-                  value={showCalendars.includes("month")}
-                  onChange={() => {
-                    if (showCalendars.includes("month")) {
-                      setShowCalendars(showCalendars.filter((calendar) => calendar !== "month"))
-                    } else {
-                      setShowCalendars([...showCalendars, "month"])
-                    }
-                  }}
-                  className="rounded bg-gray-500/20 px-2 mr-2"
-                />
-                <label
-                  htmlFor="month"
-                >Mensual</label>
-              </div>
-            </label>
+          <div
+            className="flex flex-col"
+          >
+            Calendarios a Mostrar
+            <div>
+              <input
+                id="day"
+                type="checkbox"
+                value={showCalendars.includes("day")}
+                onChange={() => {
+                  if (showCalendars.includes("day")) {
+                    setShowCalendars(showCalendars.filter((calendar) => calendar !== "day"))
+                  } else {
+                    setShowCalendars([...showCalendars, "day"])
+                  }
+                }}
+                className="rounded bg-gray-500/20 px-2 mr-2"
+              />
+              Diario
+            </div>
+            <div>
+              <input
+                id="week"
+                type="checkbox"
+                value={showCalendars.includes("week")}
+                onChange={() => {
+                  if (showCalendars.includes("week")) {
+                    setShowCalendars(showCalendars.filter((calendar) => calendar !== "week"))
+                  } else {
+                    setShowCalendars([...showCalendars, "week"])
+                  }
+                }}
+                className="rounded bg-gray-500/20 px-2 mr-2"
+              />
+              <label
+                htmlFor="week"
+              >Semanal</label>
+            </div>
+            <div>
+              <input
+                id="month"
+                type="checkbox"
+                value={showCalendars.includes("month")}
+                onChange={() => {
+                  if (showCalendars.includes("month")) {
+                    setShowCalendars(showCalendars.filter((calendar) => calendar !== "month"))
+                  } else {
+                    setShowCalendars([...showCalendars, "month"])
+                  }
+                }}
+                className="rounded bg-gray-500/20 px-2 mr-2"
+              />
+              <label
+                htmlFor="month"
+              >Mensual</label>
+            </div>
           </div>
         </div>
       </Modal>
