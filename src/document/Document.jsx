@@ -1,5 +1,4 @@
 import { Document as DocumentPdf, PDFViewer } from '@react-pdf/renderer';
-import { FrontPage } from './sections/FrontPage';
 import { DayPage } from './sections/DayPage';
 import { DocumentContext } from './DocumentContext';
 import { useContext } from 'react';

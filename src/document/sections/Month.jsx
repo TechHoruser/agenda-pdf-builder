@@ -49,12 +49,6 @@ export const Month = ({
   const lastDay = searchNextLastDayOfWeek(endDate);
   const numberOfDays = Math.round((lastDay.getTime() - firstDay.getTime()) / (24 * 60 * 60 * 1000) + 1);
 
-  console.log('Month', initDate.toLocaleDateString('es-ES', { month: 'long' }))
-  console.log('Month - first day', firstDay.toLocaleString())
-  console.log('Month - last day', lastDay.toLocaleString())
-  console.log('Month - number of days', numberOfDays)
-  console.log('Month - endDate', endDate.toLocaleString())
-
   const isDayAvailable = (day) => {
     return availableDays.includes(day.getDay())
       && day.getTime() >= initDate.getTime()
